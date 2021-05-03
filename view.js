@@ -29,3 +29,9 @@ MyForm.prototype.clear = function(ctx) {
       this.getForms().forEach(function(eltDuTableau) {
         eltDuTableau.paint(ctx); });
   };
+
+  updateShapeList = function(ctx) {
+    
+    var element = myForm.getElementById('shapeList')
+
+  };
