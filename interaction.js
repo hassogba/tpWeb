@@ -11,33 +11,63 @@ function DnD(canvas, interactor) {
   this.yFinalPos=0;
   this.pression=false;
 
+  this.boundingObject = boundingObject;
+  this.interactor = interactor; 
+  this.getxInitPos = function() {
+    return   this.xInitPos;
+  }.bind(this) ;
+
+  this.getyInitPos = function() {
+    return   this.yInitPos;
+
+  }.bind(this) ;
+
+  this.getxFinalPos = function() {
+    return   this.xFinalPos;
+
+  }.bind(this) ;
+  this.getyFinalPos = function() {
+    return   this.yFinalPos;
+
+  }.bind(this) ;
+
 	// Developper les 3 fonctions gérant les événements
 
   DnD.prototype.pression=function(evt) {
-    return {pression=true} ;
-
-  };
+    const res = getMousePosition(canvas, evt)
+    this.xFinalPos = this.xInitPos = res.x;
+    this.yFinalPos = this.yInitPos = res.y;
+    this.pression = true;
+    interactor.onInteractionStart(this)
+  }.bind(this);
 
   DnD.prototype.deplacer=function(evt) {
     var res = getMousePosition();
-    if (pression = true){
-      return {
-        xFinalPos = res.x,
-        yFinalPos = res.y
-      }
+    if (this.pression){
+       this.xInitPos = this.xFinalPos;
+       this.yInitPos = this.yFinalPos;
+
+       const res = getMousePosition(canvas, evt);
+       this.xFinalPos = res.x;
+       this.yFinalPos = res.y;
+
+       interactor.onInteractionStart(this)
     };
 
-  };
+  }.bind(this);
 
   DnD.prototype.relacher=function(evt) {
-    if (pression = true){
-      return pression = false;
-    }
-    console.log(pression);
-    console.log(xFinalPos);
-    console.log(yFinalPos);
 
-  };
+    if (this.pression){
+      const res = getMousePosition(canvas, evt);
+      this.xFinalPos = res.x;
+      this.yFinalPos = res.y;
+      this.pression = false;
+
+      interactor.onInteractionStart(this);
+    };
+
+  }.bind(this);
 
 
 	// Associer les fonctions précédentes aux évènements du canvas.
